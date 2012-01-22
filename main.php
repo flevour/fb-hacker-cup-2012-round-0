@@ -11,6 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 $console = new Application();
 
 
-$console->add(new FbHack\Solver());
+$console->add(new \FbHack\AlphabetSoup\SolverCommand(new \FbHack\AlphabetSoup\Solver()));
 
 $console->run();
