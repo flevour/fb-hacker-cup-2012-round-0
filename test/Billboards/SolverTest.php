@@ -20,9 +20,12 @@ class SolverTest extends \PHPUnit_Framework_TestCase
         $billboard->expects($this->once())
                 ->method('setHeight')
                 ->with(6);
-        $billboard->expects($this->once())
+
+        $algorithm = $this->getMockBuilder('\FbHack\Billboards\Billboard\Algorithm')
+                ->disableOriginalConstructor()
+                ->getMock();
+        $algorithm->expects($this->once())
                 ->method('solve')
-                ->with($text)
                 ->will($this->returnValue(2));
 
         $billboardFactory = $this->getMock('\FbHack\Billboards\Billboard\BillboardFactory');
@@ -32,6 +35,10 @@ class SolverTest extends \PHPUnit_Framework_TestCase
         $billboardFactory->expects($this->once())
                 ->method('createText')
                 ->will($this->returnValue($text));
+        $billboardFactory->expects($this->once())
+                ->method('createAlgorithm')
+                ->with($billboard, $text)
+                ->will($this->returnValue($algorithm));
         $solver = new \FbHack\Billboards\Solver($billboardFactory);
         $this->assertEquals(2, $solver->getSolutionForLine('20 6 hacker cup'));
     }

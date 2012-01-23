@@ -22,6 +22,6 @@ class Solver implements SolverInterface
         $text = $this->factory->createText();
         $text->setText(implode(' ', $pieces));
         $text->setSize($height);
-        return $billboard->solve($text);
+        return $this->factory->createAlgorithm($billboard, $text)->solve();
     }
 }

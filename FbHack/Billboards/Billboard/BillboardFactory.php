@@ -13,4 +13,9 @@ class BillboardFactory
     {
         return new Text();
     }
+
+    public function createAlgorithm(Billboard $billboard, Text $text)
+    {
+        return new Algorithm($billboard, $text);
+    }
 }
