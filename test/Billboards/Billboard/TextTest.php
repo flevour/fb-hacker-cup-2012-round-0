@@ -29,6 +29,7 @@ class TextTest extends \PHPUnit_Framework_TestCase
             array(20, 2, 'hacker cup', 2, true),
             array(10, 1, 'hacker cups', 1, false),
             array(10, 1, 'hacker cup', 2, false),
+            array(10, 20, 'MUST BE ABLE TO HACK', 3, false),
         );
     }
 }

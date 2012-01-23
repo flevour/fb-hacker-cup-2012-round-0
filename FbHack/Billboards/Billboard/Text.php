@@ -25,10 +25,14 @@ class Text
             $curLine = $map[$line];
             $curLine[] = strlen($word);
             $curLength = array_sum($curLine) + count($curLine) - 1;
-            if ($curLength <= ((int) $billboard->getWidth() / $size)) {
+            $maxWidth = ((int) $billboard->getWidth() / $size);
+            if ($curLength <= $maxWidth) {
                 $map[$line] = $curLine;
             }
             else {
+                if (strlen($word) > $maxWidth) {
+                    return false;
+                }
                 $line++;
                 $map[$line][] = strlen($word);
             }
