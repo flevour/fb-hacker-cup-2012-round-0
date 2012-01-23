@@ -8,4 +8,9 @@ class BillboardFactory
     {
         return new Billboard();
     }
+
+    public function createText()
+    {
+        return new Text();
+    }
 }

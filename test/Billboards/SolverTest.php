@@ -7,11 +7,12 @@ require_once(__DIR__ . '/../../autoload.php');
 class SolverTest extends \PHPUnit_Framework_TestCase
 {
 
-    /**
-     * @dataProvider dataProviderFinalSolution
-     */
-    public function testFinalSolution($expectation, $line)
+    public function testFinalSolution()
     {
+        $text = $this->getMock('\FbHack\Billboards\Billboard\Text');
+        $text->expects($this->once())
+                ->method('setText')
+                ->with('hacker cup');
         $billboard = $this->getMock('\FbHack\Billboards\Billboard\Billboard');
         $billboard->expects($this->once())
                 ->method('setWidth')
@@ -21,14 +22,18 @@ class SolverTest extends \PHPUnit_Framework_TestCase
                 ->with(6);
         $billboard->expects($this->once())
                 ->method('solve')
-                ->with('hacker cup')
-                ->will($this->returnValue($expectation));
+                ->with($text)
+                ->will($this->returnValue(2));
+
         $billboardFactory = $this->getMock('\FbHack\Billboards\Billboard\BillboardFactory');
         $billboardFactory->expects($this->once())
                 ->method('createBillboard')
                 ->will($this->returnValue($billboard));
+        $billboardFactory->expects($this->once())
+                ->method('createText')
+                ->will($this->returnValue($text));
         $solver = new \FbHack\Billboards\Solver($billboardFactory);
-        $this->assertEquals($expectation, $solver->getSolutionForLine($line));
+        $this->assertEquals(2, $solver->getSolutionForLine('20 6 hacker cup'));
     }
 
     public function dataProviderFinalSolution()

@@ -17,8 +17,11 @@ class Solver implements SolverInterface
     {
         $billboard = $this->factory->createBillboard();
         $pieces = explode(' ', $line);
-        $billboard->setWidth(array_shift($pieces));
-        $billboard->setHeight(array_shift($pieces));
-        return $billboard->solve(implode(' ', $pieces));
+        $billboard->setWidth($width = array_shift($pieces));
+        $billboard->setHeight($height = array_shift($pieces));
+        $text = $this->factory->createText();
+        $text->setText(implode(' ', $pieces));
+        $text->setSize($height);
+        return $billboard->solve($text);
     }
 }
