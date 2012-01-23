@@ -10,13 +10,25 @@ use FbHack\Billboards\Billboard\Text;
 class TextTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testFit()
+    /**
+     * @dataProvider dataProviderFit
+     */
+    public function testFit($width, $height, $text, $size, $expectation)
     {
         $billboard = new Billboard();
-        $billboard->setWidth(10);
-        $billboard->setHeight(1);
-        $text = new Text('hacker cup');
-        $this->assertEquals(true, $text->fit($billboard, 1));
+        $billboard->setWidth($width);
+        $billboard->setHeight($height);
+        $text = new Text($text);
+        $this->assertEquals($expectation, $text->fit($billboard, $size));
     }
 
+    public function dataProviderFit()
+    {
+        return array(
+            array(10, 1, 'hacker cup', 1, true),
+            array(20, 2, 'hacker cup', 2, true),
+            array(10, 1, 'hacker cups', 1, false),
+            array(10, 1, 'hacker cup', 2, false),
+        );
+    }
 }

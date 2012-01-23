@@ -16,7 +16,24 @@ class Algorithm
 
     public function solve()
     {
-        return 3;
+        $size = $this->billboard->getHeight();
+        return $this->recurse(1, $size);
+    }
+
+    private function recurse($min, $max)
+    {
+        if ($max - $min <= 1) {
+            $result = $this->text->fit($this->billboard, $max);
+            return ($result) ? $max : $min;
+        }
+        $size = (int) (($max + $min) / 2);
+        $result = $this->text->fit($this->billboard, $size);
+        if ($result) {
+            return $this->recurse($size, $max);
+        }
+        else {
+            return $this->recurse($min, $size);
+        }
     }
 
     public function setBillboard(Billboard $billboard)
