@@ -1,1 +1,5 @@
 nbproject
+composer.phar
+autoload.php
+nbproject
+vendor/*
