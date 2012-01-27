@@ -1,26 +1,29 @@
 <?php
 
 namespace FbHack\Auction;
+
 use FbHack\SolverInterface;
 
 class Solver implements SolverInterface
 {
+
     private $factory = null;
 
-    public function __construct(BillboardFactory $factory)
+    public function __construct(Auction$factory)
     {
         $this->factory = $factory;
     }
 
     public function getSolutionForLine($line)
     {
-        $billboard = $this->factory->createBillboard();
-        $pieces = explode(' ', $line);
-        $billboard->setWidth($width = array_shift($pieces));
-        $billboard->setHeight($height = array_shift($pieces));
-        $text = $this->factory->createText();
-        $text->setText(implode(' ', $pieces));
-        $text->setSize($height);
-        return $this->factory->createAlgorithm($billboard, $text)->solve();
+        $args = explode(' ', $line);
+        $generator = call_user_func_array(array($this->factory, 'createGenerator'), $args);
+        $listByPrice = new ProductListByPrice();
+        $listByWeight = new ProductListByWeight();
+        while ($product = $generator->generate()) {
+            $listByPrice->insert($product);
+            $listByWeight->insert($product);
+        }
     }
+
 }

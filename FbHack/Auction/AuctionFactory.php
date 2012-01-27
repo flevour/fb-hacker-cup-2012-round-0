@@ -1,21 +1,11 @@
 <?php
 
-namespace FbHack\Billboards\Billboard;
+namespace FbHack\Auction;
 
-class BillboardFactory
+class AuctionFactory
 {
-    public function createBillboard()
+    public function createGenerator($n, $p1, $w1, $m, $k, $a, $b, $c, $d)
     {
-        return new Billboard();
-    }
-
-    public function createText()
-    {
-        return new Text();
-    }
-
-    public function createAlgorithm(Billboard $billboard, Text $text)
-    {
-        return new Algorithm($billboard, $text);
+        return new Generator($n, $p1, $w1, $m, $k, $a, $b, $c, $d);
     }
 }

@@ -26,9 +26,18 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
             4 => "4,6",
             5 => "5,2",
         );
-        for ($i = 1; $i <= 5; $i++) {
-            $this->assertEquals($expectations[$i], $generator->generate()->toString());
+        $i = 1;
+        while ($product = $generator->generate()) {
+            $this->assertEquals($expectations[$i], $product->toString());
+            $i++;
         }
     }
 
+    public function testSecond()
+    {
+        $generator = new \FbHack\Auction\Generator(13, 5, 7, 5, 9, 1, 3, 2, 5);
+        while ($product = $generator->generate()) {
+            printf("%s\n", $product->toString());
+        }
+    }
 }
