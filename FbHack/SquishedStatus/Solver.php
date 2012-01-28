@@ -5,24 +5,37 @@ use FbHack\SolverInterface;
 
 class Solver implements SolverInterface
 {
+    private $maxCode = null;
     public function getSolutionForLine($line)
     {
-        $letters = array('H', 'A', 'C', 'K', 'E', 'R', 'U', 'P');
-        $counter = array();
-        // setup
-        foreach ($letters as $char) {
-            $counter[$char] = 0;
+        list($maxCode, $status) = explode(' ', $line);
+        $this->maxCode = (int) $maxCode;
+        return $this->count(str_split($status)) % 4207849484;
+    }
+
+    private function count(array $status) {
+        if (count($status) <= 1) {
+            return $this->statusIsValid($status);
         }
-        foreach (str_split($line) as $char) {
-            if (in_array($char, $letters)) {
-                $value = 1;
-                if ($char == 'C') {
-                    // I need 2 C's to form HACKERCUP
-                    $value = 0.5;
-                }
-                $counter[$char] += $value;
+        if (count($status) >= 2) {
+            $count = 0;
+            for ($i = 1; $i <= count($status); $i++) {
+                $first = array_slice($status, 0, $i);
+                $second = array_slice($status, $i);
+                $count += (int) ($this->statusIsValid($first) * $this->count($second));
             }
+            return $count;
         }
-        return floor(min($counter));
+    }
+
+    private function statusIsValid(array $status) {
+        if (empty($status)) {
+            return true;
+        }
+        // controllare se comincia per zero
+        $_status = (int) (implode('', $status));
+
+        $return = $status[0] != 0 && $_status >= 1 && $_status <= $this->maxCode;
+        return $return;
     }
 }
