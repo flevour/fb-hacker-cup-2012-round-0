@@ -13,5 +13,6 @@ $console = new Application();
 
 $console->add(new \FbHack\AlphabetSoup\SolverCommand(new \FbHack\AlphabetSoup\Solver()));
 $console->add(new \FbHack\Billboards\SolverCommand(new \FbHack\Billboards\Solver(new FbHack\Billboards\Billboard\BillboardFactory)));
+$console->add(new FbHack\SquishedStatus\SolverCommand(new \FbHack\SquishedStatus\Solver()));
 
 $console->run();
