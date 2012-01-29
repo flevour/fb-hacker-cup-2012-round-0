@@ -21,12 +21,22 @@ class SolverTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectation, $solver->getSolutionForLine($line));
     }
 
-    public function testMergeSort()
+    /**
+     * @dataProvider dataProviderMergeSort
+     */
+    public function testMergeSort($expectation, $input, $function = 'merge')
     {
         $solver = new \FbHack\RecoverSequence\Solver();
-        $this->assertEquals(array(1, 2, 3, 4), $solver->mergeSort(array(2, 4, 3, 1)));
-
+        $this->assertEquals($expectation, $solver->mergeSort($input, $function));
     }
+
+    public function dataProviderMergeSort()
+    {
+        return array(
+            array(range(1, 4), array(2, 4, 3, 1)),
+        );
+    }
+
     public function testMergeSortDebugSequence()
     {
         $solver = new \FbHack\RecoverSequence\Solver();
@@ -36,7 +46,11 @@ class SolverTest extends \PHPUnit_Framework_TestCase
     public function dataProviderFinalSolution()
     {
         return array(
-            array(2, '2 1')
+            array(994, '2 1'),
+            array(1024, '2 2'),
+            array(987041, '4 12212'),
+            array(570316, '5 1122211'),
+            array(940812, '10 121221212111122121212'),
         );
     }
 
